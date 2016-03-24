@@ -1,0 +1,51 @@
+﻿<Window x:Class="SourceCodeIndexer.UI.CustomDictionaryWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:viewModels="clr-namespace:SourceCodeIndexer.UI.ViewModels"
+        mc:Ignorable="d" Title="User Dictionary" Height="300" Width="407"
+        d:DataContext="{d:DesignInstance d:Type=viewModels:CustomDictionaryWindowViewModel}" Background="#FFF0F0F0" WindowStartupLocation="CenterScreen" Icon="Resources/book.png">
+    <Grid Margin="5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <TextBox Grid.Column="0" x:Name="TxtAddWord" Text="{Binding Word}" HorizontalAlignment="Stretch" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" TextChanged="TxtAddWord_TextChanged" />
+            <Button Grid.Column="1" x:Name="BtnAddWord" Content="_Add Word" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Top" Margin="5,0,0,0" IsEnabled="False" Padding="5,2" Height="23" Click="BtnAddWord_Click" />
+        </Grid>
+        
+        <ListBox Grid.Row="1" x:Name="LstWords" ItemsSource="{Binding Path=Words}" SelectionMode="Multiple" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Padding="0" Margin="0,5,0,5" SelectionChanged="LstWords_SelectionChanged">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding}"/>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <WrapPanel Grid.Column="0" HorizontalAlignment="Left">
+                <Button x:Name="BtnDelete" Content="D_elete Selected" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" IsEnabled="False" Padding="5,2" MinWidth="50" Height="23" Margin="5,0,0,0" Click="BtnDelete_Click" />
+                <Button x:Name="BtnDeleteAll" Content="_Delete All" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="5,2" MinWidth="50" Height="23" Margin="5,0,0,0" Click="BtnDeleteAll_Click" />
+            </WrapPanel>
+
+            <WrapPanel Grid.Column="1" HorizontalAlignment="Right">
+                <Button x:Name="BtnImport" Content="_Import" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="5,0,0,0" IsEnabled="True" Padding="5,2" MinWidth="50" Height="23" Click="BtnImport_Click" />
+                <Button x:Name="BtnSave" Content="_Save" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="5,0,0,0" IsEnabled="{Binding IsSaveEnabled}" Padding="5,2" MinWidth="50" Height="23" Click="BtnSave_Click" />
+                <Button x:Name="BtnExit" Content="E_xit" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="5,0,0,0" IsEnabled="True" Padding="5,2" MinWidth="50" Height="23" Click="BtnExit_Click" />
+            </WrapPanel>
+        </Grid>
+        
+    </Grid>
+</Window>

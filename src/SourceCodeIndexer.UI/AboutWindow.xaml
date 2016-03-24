@@ -1,0 +1,33 @@
+﻿<Window x:Class="SourceCodeIndexer.UI.AboutWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" Title="About" Height="272.145" Width="390.568" WindowStartupLocation="CenterOwner"  Background="#FFF0F0F0" Icon="Resources/help.png">
+        <Grid Margin="15,5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="7*" />
+            </Grid.RowDefinitions>
+            <Border BorderBrush="Black" BorderThickness="1" Margin="0,0,0,10">
+            <TextBlock TextWrapping="Wrap" HorizontalAlignment="Center" TextAlignment="Center">
+                <Run FontSize="40">STAC 1.0</Run>
+                <LineBreak />
+                <Run>A tool for Textual Analysis of Code</Run>
+                <LineBreak />
+                <LineBreak />
+                Github: <Hyperlink RequestNavigate="Hyperlink_OnRequestNavigate" NavigateUri="https://github.com/stactool/STAC">https://github.com/stactool/STAC</Hyperlink>
+                <LineBreak />
+                <TextBox Background="Transparent" VerticalAlignment="Center" Margin="0,0,0,0" BorderBrush="Transparent">Contact: mahmoud@csc.lsu.edu</TextBox>
+                <LineBreak />
+                <LineBreak />
+                <LineBreak />
+                Copyright © 2016 
+                <LineBreak/>
+                Software Engineering Research Group
+                <LineBreak />
+                Louisiana State University
+                <LineBreak />
+            </TextBlock>
+            </Border>
+        </Grid>
+</Window>

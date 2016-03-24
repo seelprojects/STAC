@@ -1,0 +1,82 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+        <title>STAC Help</title>
+        <style>
+            body{margin: 10px; padding: 10px; font-size: 1.4em;}
+            h1{ text-align: center;}
+            h2{color: #333; margin-bottom: 1px;}
+            p{margin: 0;}
+            .q{font-weight: 700; margin: 15px 0 0 0; text-decoration: underline;}
+            .a{margin: 15px 0 0 15px;}
+            li{margin: 6px 0;}
+        </style>
+    </head>
+    <body>
+        <h1>STAC</h1>
+        <h2>Project Settings</h2>
+        <p>This section gives a brief description about project settings.</p>
+        
+        <p class='q'>Selecting a project to index</p>
+        <ul>
+            <li>Click on <b>Open Project</b> button or press (ALT + O).</li>
+            <li>In Browse For Folder dialog, select a project (Java, C# or C++) and click OK.</li>
+            <li>Alternatively, a full path for the project folder can also be typed in the textbox followed Enter key.</li>
+        </ul>
+        
+        <p class='q'>Selecting files to index</p>
+        <ul>
+            <li>Select a project to index.</li>
+            <li><b>Available Files</b>: Available Files are files in the project that are excluded from indexing. Initially all project's files are in this list. User can select all <i>Available Files</i> for indexing by clicking >> button or select individual file by clicking > button.</li>
+            <li><b>Selected Files</b>: Selected Files are files in the project that are used for indexing. User can remove all <i>Selected Files</i> for indexing by clicking << button or remove individual Selected File by using < button.</li>
+        </ul>
+        
+        <h2>Indexer Settings</h2>
+        <p>This section gives a brief description about indexer settings.</p>
+        
+        <p class='q'>Selecting splitting technique</p>
+        <p class='a'>STAC splits by default all words with camel-casing. Advance splitting can be used in indexing process to split words that are not properly camel-cased. Check <b>Advance Splitting</b> checkbox to apply advance splitting. Uncheck the box to apply only camel-case splitting.</p>
+        
+        <p class='q'>Spell Checking</p>
+        <p class='a'>Incorrect spellings can be checked by checking <b>Spell check</b> checkbox. A list of misspelled words and their corrections is displayed in Spell checking tab once the project is indexed.</p>
+        
+        <p class='q'>Stemming</p>
+        <p class='a'>STAC uses Porter Stemmer (<a href='http://www.tartarus.org/~martin/PorterStemmer'>http://www.tartarus.org/~martin/PorterStemmer</a>) to reduce word to its morphological root by removing derivational and inflectional suffixes.
+        Porter stemmer can be used during indexing process by checking <b>Stemmer</b> checkbox. A list of words and their root is displayed in Stemming tab once the project is indexed.</p>
+        
+        <p class='q'>Lemmatization</p>
+        <p class='a'>STAC provides Stanford coreNLP (<a href='http://stanfordnlp.github.io/CoreNLP/'>http://stanfordnlp.github.io/CoreNLP/</a>) to reduce a word to its lemma. 
+        Lemmatization can be used during indexing process by checking <b>Lemmatizer</b> checkbox. A list of words and their root is displayed in Stemming tab once the project is indexed.</p>
+        
+        <h2>Custom Dictionary</h2>
+        <p class='a'>STAC's Custom Dictionary allows users to maintain their own list of words that are neither splitted nor spell checked during indexing. This feature is accessed from File menu.</p>
+        <ul>
+            <li>Click on File menu.</li>
+            <li>Click <b>Custom Dictionary.</b></li>
+            <li>To add a single word: Type the word in the text box and click <b>Add Word</b>. Press <b>Save</b> to save the changes.</li>
+            <li>To delete a single word: Select the word from the list and click <b>Delete Selected</b>. Press <b>Save</b> to save the changes.</li>
+            <li>To delete all words: Click <b>Delete All</b>. Press <b>Save</b> to save the changes.</li>
+            <li>To import from other text file: User can import list of words from other text file. Click <b>Import</b> and select the file to be used. Then press <b>Open</b>. Press <b>Save</b> to save the changes.</li>
+        </ul>
+        
+        <h2>Saving Result</h2>
+        <p class='a'>Result from an indexing process can be saved using STAC's Save menu (File menu > Save)</p>
+        <ul>
+            <li>Click on File menu.</li>
+            <li>Click Save.</li>
+            <li>Select a folder where the result text files will be saved and press OK.</li>
+        </ul>
+        
+        <h2>Project Metrics</h2>
+        <p class='a'>Project metric displays number of source files and lines of codes and comments. These numbers are available after a project is selected to indexed.</p>
+        
+        <h2>Setting up the Stanford Lemmatizer</h2>
+        <ul>
+            <li>Download Stanford Core-NLP (v3.5.2) from <a href="http://stanfordnlp.github.io/CoreNLP/">http://stanfordnlp.github.io/CoreNLP/</a> and extract stanford-corenlp-3.5.2-models.jar. Extract the content of the jar file to a folder, let's say x.</TextBlock>
+            <li>Open the folder where STAC is installed and locate <b>SourceCodeIndexer.UI.exe.config</b></li>
+            <li>Open the file using any text editor. Update the <b>value</b> for <b>StanfordModelsPath</b> with the folder's path where stanford models were extracted (here it's path to x folder).</li>
+            <li>Close and re-run STAC.</li>
+        </ul>
+        <p style='text-align: center;'>-- End --</p>
+    </body>
+</html>
