@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using Xceed.Wpf.Toolkit;
+using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Input;
 using SourceCodeIndexer.UI.ViewModels;

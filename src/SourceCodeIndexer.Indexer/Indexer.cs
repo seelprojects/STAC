@@ -147,6 +147,55 @@ namespace SourceCodeIndexer.STAC
             }
         }
 
+        public void Initialize()
+        {
+            RegisterTextExtractors();
+
+            // STEP 1
+            // extact all text and update dictionary
+            UpdateTokenDictionary();
+        }
+
+        public IEnumerable<string> GetResult(IndexerFile file)
+        {
+            IndexerResult indexerResult = new IndexerResult();
+            _configuration.Splitter.SetResultPhase(true);
+
+            if (!_textExtractors.ContainsKey(file.Extension))
+            {
+                string message = "No extractor is defined for file extension: " + file.Extension + ".";
+                throw new Exception(message);
+            }
+
+            ITextExtractor textExtractor = _textExtractors[file.Extension];
+            string fileText = File.ReadAllText(file.Path);
+            foreach (string identifier in textExtractor.Extract(fileText, _configuration.ExtractType))
+            {
+                try
+                {
+                    IdentifierSplitResult identifierSplitResult = new IdentifierSplitResult(identifier, file);
+                    identifierSplitResult.Add(_configuration.Splitter.Split(identifier));
+                    indexerResult.AddSplitResult(identifierSplitResult);
+                }
+                catch (Exception)
+                {
+                    continue;
+                }
+            }
+
+            return indexerResult.GetSplitResultList().SelectMany(x => x.Splits).Select(Filter).Where(x => !string.IsNullOrEmpty(x));
+        }
+
+        private string Filter(SplitWithIdentification split)
+        {
+            string result = split.Split?.ToLowerInvariant() ?? "";
+            if (result == "" || _configuration.Dictionary.IsStopWord(result))
+                return null;
+            if (_configuration.Stemmer != null && split.SplitIdentification == Enum.SplitIdentification.Identified)
+                result = _configuration.Stemmer.GetStemmedText(split.Split) ?? split.Split;
+            return result;
+        }
+
         /// <summary>
         /// Get Result
         /// </summary>

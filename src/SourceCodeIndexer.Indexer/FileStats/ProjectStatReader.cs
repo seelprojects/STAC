@@ -2,6 +2,7 @@
 using System.IO;
 using System.Linq;
 using SourceCodeIndexer.STAC.Models;
+using SourceCodeIndexer.STAC.Notification;
 
 namespace SourceCodeIndexer.STAC.FileStats
 {
@@ -9,11 +10,16 @@ namespace SourceCodeIndexer.STAC.FileStats
     {
         private readonly string _projectPath;
         private readonly List<string> _fileExtensionsToSearch;
+        private readonly INotificationHandler _notificationHandler;
 
-        public ProjectStatReader(string projectPath, List<string> fileExtensionsToSearch)
+        private long _fileCount;
+
+        public ProjectStatReader(string projectPath, List<string> fileExtensionsToSearch, INotificationHandler notificationHandler = null)
         {
             _projectPath = projectPath;
             _fileExtensionsToSearch = fileExtensionsToSearch;
+            //_fileExtensionsToSearch.Add(".txt");
+            _notificationHandler = notificationHandler;
         }
 
         /// <summary>
@@ -45,13 +51,17 @@ namespace SourceCodeIndexer.STAC.FileStats
             List<FileStat> returnFileStats = new List<FileStat>();
 
             // load files in this dir
-            returnFileStats.AddRange(directoryInfo.EnumerateFiles()
+            var currentFiles = directoryInfo.EnumerateFiles()
                 .Where(file => _fileExtensionsToSearch.Contains(file.Extension.ToLowerInvariant()))
-                .Select(file => new FileStat() {IndexerFile = new IndexerFile(file.FullName, file.Name, file.Extension)}));
+                .Select(file => new FileStat() { IndexerFile = new IndexerFile(file.FullName, file.Name, file.Extension) });
+
+            _fileCount += currentFiles.Count();
+            if (_notificationHandler != null)
+                _notificationHandler.UpdateStatus(_fileCount.ToString());
+            returnFileStats.AddRange(currentFiles);
 
             // recursively load file in sub dirs
             directoryInfo.GetDirectories().ToList().ForEach(x => returnFileStats.AddRange(GetAllFiles(x)));
-
             return returnFileStats;
         }
     }

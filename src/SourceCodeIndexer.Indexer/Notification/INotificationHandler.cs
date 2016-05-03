@@ -24,5 +24,11 @@
         /// </summary>
         /// <param name="percentCompleted">Total percent completed.</param>
         void UpdateProgress(double percentCompleted);
+
+        /// <summary>
+        /// To pass any text to UI
+        /// </summary>
+        /// <param name="text">Text to be passed</param>
+        void UpdateStatus(string text);
     }
 }

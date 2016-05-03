@@ -81,6 +81,15 @@ namespace SourceCodeIndexer.UI.ViewModels
             Status = message;
         }
 
+        /// <summary>
+        /// This is only used during loading files currently so just use for that
+        /// </summary>
+        /// <param name="message">Files loaded</param>
+        public void UpdateStatus(string message)
+        {
+            FilesLoaded = message;
+        }
+
         public void UpdateProgress(double percentCompleted)
         {
             ProgressValue = percentCompleted;
@@ -89,6 +98,17 @@ namespace SourceCodeIndexer.UI.ViewModels
         #endregion
 
         #region Status/Index
+
+        private string _filesLoaded = "Loading Files ...";
+        public string FilesLoaded
+        {
+            get { return _filesLoaded; }
+            set
+            {
+                _filesLoaded = "Loading Files ... " + value;
+                NotifyPropertyChanged(() => FilesLoaded);
+            }
+        }
 
         private bool _hasIndexingResult;
         public bool HasIndexingResult
@@ -192,7 +212,6 @@ namespace SourceCodeIndexer.UI.ViewModels
         /// </summary>
         private void BackgroundWorker_DoWork(object sender, DoWorkEventArgs e)
         {
-
             IsIndexingInProgress = true;
             UpdateCanStartIndexing();
 
@@ -430,6 +449,17 @@ namespace SourceCodeIndexer.UI.ViewModels
 
         private ProjectStat _projectStat;
 
+        private bool _isBusy = false;
+        public bool IsBusy
+        {
+            get { return _isBusy; }
+            set
+            {
+                _isBusy = value;
+                NotifyPropertyChanged(() => IsBusy);
+            }
+        }
+
         /// <summary>
         /// Loads Project from path
         /// </summary>
@@ -439,7 +469,21 @@ namespace SourceCodeIndexer.UI.ViewModels
             SelectedFiles.Clear();
             AvailableFiles.Clear();
 
-            _projectStat = new ProjectStatReader(projectPath, _textExtractorsWithReaders.SelectMany(x => x.Item1.FileExtensionFor()).Distinct().ToList()).GetProjectStat();
+            BackgroundWorker backgroundWorker = new BackgroundWorker();
+            backgroundWorker.DoWork += LoadFilesBackgroundWorker_DoWork;
+            backgroundWorker.RunWorkerCompleted += LoadFilesBackgroundWorker_WorkCompleted;
+            backgroundWorker.RunWorkerAsync(projectPath);
+        }
+
+        /// <summary>
+        /// Loads files
+        /// </summary>
+        private void LoadFilesBackgroundWorker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            IsBusy = true;
+
+            string projectPath = e.Argument.ToString();
+            _projectStat = new ProjectStatReader(projectPath, _textExtractorsWithReaders.SelectMany(x => x.Item1.FileExtensionFor()).Distinct().ToList(), this).GetProjectStat();
 
             if (_projectStat == null)
             {
@@ -448,7 +492,6 @@ namespace SourceCodeIndexer.UI.ViewModels
             }
 
             // populate list
-            _projectStat.FileStats.Select(x => x.IndexerFile).OrderBy(x => x.Name).ToList().ForEach(x => AvailableFiles.Add(x));
             if (_projectStat == null)
                 return;
 
@@ -467,14 +510,25 @@ namespace SourceCodeIndexer.UI.ViewModels
                 extensionFileReaderBases[fileStat.IndexerFile.Extension].UpdateFileStatCount(fileStat);
             }
 
-            UpdateCanStartIndexing();
+            e.Result = _projectStat;
         }
 
+        /// <summary>
+        /// Load file completed
+        /// </summary>
+        private void LoadFilesBackgroundWorker_WorkCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            IsBusy = false;
+
+            _projectStat.FileStats.Select(x => x.IndexerFile).OrderBy(x => x.Name).ToList().ForEach(x => AvailableFiles.Add(x));
+
+            UpdateCanStartIndexing();
+        }
         #endregion
 
-        /// <summary>
-        /// Updates start indexing button
-        /// </summary>
+            /// <summary>
+            /// Updates start indexing button
+            /// </summary>
         public void UpdateCanStartIndexing()
         {
             CanStartIndexing = !IsIndexingInProgress && SplitTypes.Any(x => x.IsSelected) && SelectedFiles.Any();

@@ -69,5 +69,14 @@ namespace SourceCodeIndexer.STAC.Notification
         {
             _handler?.UpdateProgress(percentCompleted);
         }
+
+        /// <summary>
+        /// Total percent completed at every status update
+        /// </summary>
+        /// <param name="message">Message to pass.</param>
+        public void UpdateStatus(string message)
+        {
+            _handler?.UpdateStatus(message);
+        }
     }
 }

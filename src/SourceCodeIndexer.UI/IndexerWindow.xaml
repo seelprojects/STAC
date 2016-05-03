@@ -5,246 +5,249 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:viewModels="clr-namespace:SourceCodeIndexer.UI.ViewModels"
         xmlns:ui="clr-namespace:SourceCodeIndexer.UI"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d" Title="STAC 1.0" Width="650" Height="{Binding WindowHeight, Mode=OneWay}" MinHeight="{Binding WindowHeightMinResizeable, Mode=OneWay}" MinWidth="520"
         d:DataContext="{d:DesignInstance d:Type=viewModels:IndexerWindowViewModel}" Background="#FFF0F0F0">
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
         <ui:BooleanToGridHeightConverter x:Key="BooleanToGridHeightConverter" />
     </Window.Resources>
-    
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="3*" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="{Binding HasIndexingResult, Converter={StaticResource BooleanToGridHeightConverter}}" />
-            <RowDefinition Height="25" />
-        </Grid.RowDefinitions>
 
-        <!--Menu-->
-        <StackPanel Grid.Row="0">
-            <StackPanel.Background>
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="#FFB9B6B6" Offset="0.157"/>
-                    <GradientStop Color="#FFF0F0F0" Offset="0.887"/>
-                </LinearGradientBrush>
-            </StackPanel.Background>
-            <Grid Margin="0,5,0,0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                    <Button Click="ExportMenuItem_Click" BorderBrush="#FFC9C4C4" Padding="4" ToolTip="Save Result">
-                        <Image Source="Resources/save.png" Height="25" Width="25" />
-                    </Button>
-                    <Button Click="LocMetricMenuItem_Click" Margin="1,0" ToolTip="Project Metrics" BorderBrush="#FFC9C4C4" Padding="4">
-                        <Image Source="Resources/pi.png" Height="25" Width="25" />
-                    </Button>
-                    <Button Click="CustomDictionaryMenuItem_Click" Margin="1,0" ToolTip="User Dictionary" BorderBrush="#FFC9C4C4" Padding="4">
-                        <Image Source="Resources/book.png" Height="25" Width="25" />
-                    </Button>
-                    <Button Click="AboutMenuItem_Click" Margin="1,0,8,0" ToolTip="About" BorderBrush="#FFC9C4C4" Padding="4">
-                        <Image Source="Resources/help.png" Height="25" Width="25" />
-                    </Button>
-                </StackPanel>
-            </Grid>
-        </StackPanel>
+    <xctk:BusyIndicator IsBusy="{Binding Path=IsBusy}" BusyContent="{Binding Path=FilesLoaded}">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="3*" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="{Binding HasIndexingResult, Converter={StaticResource BooleanToGridHeightConverter}}" />
+                <RowDefinition Height="25" />
+            </Grid.RowDefinitions>
 
-        <!--Project-->
-        <GroupBox Grid.Row="1" x:Name="GrpProject" Header="Project Settings" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="5,0,5,5" Padding="5">
-            <Grid>
+            <!--Menu-->
+            <StackPanel Grid.Row="0">
+                <StackPanel.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#FFB9B6B6" Offset="0.157"/>
+                        <GradientStop Color="#FFF0F0F0" Offset="0.887"/>
+                    </LinearGradientBrush>
+                </StackPanel.Background>
+                <Grid Margin="0,5,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <Button Click="ExportMenuItem_Click" BorderBrush="#FFC9C4C4" Padding="4" ToolTip="Save Result">
+                            <Image Source="Resources/save.png" Height="25" Width="25" />
+                        </Button>
+                        <Button Click="LocMetricMenuItem_Click" Margin="1,0" ToolTip="Project Metrics" BorderBrush="#FFC9C4C4" Padding="4">
+                            <Image Source="Resources/pi.png" Height="25" Width="25" />
+                        </Button>
+                        <Button Click="CustomDictionaryMenuItem_Click" Margin="1,0" ToolTip="User Dictionary" BorderBrush="#FFC9C4C4" Padding="4">
+                            <Image Source="Resources/book.png" Height="25" Width="25" />
+                        </Button>
+                        <Button Click="AboutMenuItem_Click" Margin="1,0,8,0" ToolTip="About" BorderBrush="#FFC9C4C4" Padding="4">
+                            <Image Source="Resources/help.png" Height="25" Width="25" />
+                        </Button>
+                    </StackPanel>
+                </Grid>
+            </StackPanel>
+
+            <!--Project-->
+            <GroupBox Grid.Row="1" x:Name="GrpProject" Header="Project Settings" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="5,0,5,5" Padding="5">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
+                    <!--Load Project-->
+                    <Grid Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="95" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Label Grid.Row="0" Grid.ColumnSpan="2" Padding="0" Grid.Column="0" x:Name="LblProject" Content="Select a project to index (Java, C#, C++): " HorizontalAlignment="Left" VerticalAlignment="Top" VerticalContentAlignment="Center" Height="23"/>
+                        <TextBox Grid.Row="1" Grid.Column="0" x:Name="TxtProjectPath" HorizontalAlignment="Stretch" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" MouseDoubleClick="TxtProjectPath_MouseDoubleClick" KeyDown="TxtProjectPath_KeyDown" />
+                        <Button Grid.Row="1" Grid.Column="1" x:Name="BtnOpenProject" Content="_Open Project" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Top" Margin="5,0,0,0" Click="BtnOpenProject_Click" IsEnabled="True" Padding="5,2" Height="23" />
+                    </Grid>
+
+                    <!--File Display-->
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="60" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="30" />
+                            <RowDefinition Height="*" MinHeight="120" />
+                        </Grid.RowDefinitions>
+
+                        <!--Available Files-->
+                        <Label Padding="0" Grid.Column="0" Grid.Row="0" Content="Available Files" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                        <ListBox Grid.Column="0" Grid.Row="1" x:Name="LstBoxAvailableFiles" ItemsSource="{Binding Path=AvailableFiles}" SelectionMode="Multiple" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Padding="0" Margin="0,0,0,5">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Path=Name}"/>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+
+                        <!--Move File Buttons-->
+                        <StackPanel Grid.Column="1" Grid.Row="1" Orientation="Vertical" VerticalAlignment="Center">
+                            <Button x:Name="BtnMoveSelectedAvailableToSelected" Content="&gt;" Margin="0,5" Width="30" Click="BtnMoveSelectedAvailableToSelected_Click"/>
+                            <Button x:Name="BtnMoveAllAvailableToSelected" Content="&gt;&gt;" Margin="0,5" Width="30" Click="BtnMoveAllAvailableToSelected_Click"/>
+                            <Button x:Name="BtnMoveSelectedSelectedToAvailable" Content="&lt;" Margin="0,5" Width="30" Click="BtnMoveSelectedSelectedToAvailable_Click"/>
+                            <Button x:Name="BtnMoveAllSelectedToAvailable" Content="&lt;&lt;" Margin="0,5" Width="30" Click="BtnMoveAllSelectedToAvailable_Click"/>
+                        </StackPanel>
+
+                        <!--Selected Files-->
+                        <Label Padding="0" Grid.Column="2" Grid.Row="0" Content="Selected Files" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                        <ListBox Grid.Column="2" Grid.Row="1" Margin="0,0,0,5" x:Name="LstBoxSelectedFiles" ItemsSource="{Binding Path=SelectedFiles}" SelectionMode="Multiple" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Padding="0">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Path=Name}"/>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+
+                    </Grid>
+                    <!--Close File Display Grid-->
+                </Grid>
+                <!--Close Project Grid-->
+            </GroupBox>
+
+            <!--Indexer-->
+            <GroupBox Grid.Row="2" x:Name="GrpIndexer" Header="Indexer Settings" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="5,0,5,5" Padding="5">
+                <!--Splitter Setting-->
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <WrapPanel Margin="0,10,0,0" Grid.Row="0" Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Orientation="Vertical">
+                        <!--Apply Split-->
+                        <CheckBox Name="RadApplyCamelCase" Margin="0,0,0,5" IsChecked="{Binding ApplyCamelCaseSplit}">Camel Case splitting</CheckBox>
+                        <CheckBox Name="RadApplyBestSuffix" Margin="0,0,0,5" IsChecked="{Binding ApplyBestSuffixSplit}">Advance splitting</CheckBox>
+                    </WrapPanel>
+
+                    <!--Split On-->
+                    <StackPanel Margin="0,10,0,0" Grid.Row="1" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Left">
+                        <ListView Name="LstViewSplitOn" ItemsSource="{Binding Path=SplitTypes}" BorderThickness="0" Background="#FFF0F0F0">
+                            <ListView.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel Orientation="Horizontal" Background="#FFF0F0F0" />
+                                </ItemsPanelTemplate>
+                            </ListView.ItemsPanel>
+                            <ListBox.ItemContainerStyle>
+                                <Style TargetType="{x:Type ListBoxItem}">
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                                                <ContentPresenter/>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </ListBox.ItemContainerStyle>
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <CheckBox IsChecked="{Binding Path=IsSelected}" Click="ChkSplitOn_Click" Margin="0,0,5,0">
+                                        <ContentControl>
+                                            <TextBlock TextWrapping="Wrap">
+                                            <Run Text="{Binding Text}" />
+                                            </TextBlock>
+                                        </ContentControl>
+                                    </CheckBox>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </StackPanel>
+
+                    <StackPanel Margin="0,10,0,0" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Orientation="Vertical">
+                        <!--Spell Checking-->
+                        <CheckBox Name="ChkApplySpellChecking" Margin="5,0,0,5" IsChecked="{Binding ApplySpellCheck}">Spell check</CheckBox>
+                        <CheckBox Name="ChkRemoveEnglishStopWords" Margin="5,0,0,5" IsChecked="{Binding RemoveEnglishStopWords}">Remove English Stop Words</CheckBox>
+                        <CheckBox Name="ChkRemoveProgrammingStopWords" Margin="5,0,0,5" IsChecked="{Binding RemoveProgrammingStopWords}">Remove Programming Stop Words</CheckBox>
+                    </StackPanel>
+
+                    <StackPanel Margin="0,10,0,0" Grid.Row="1" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Orientation="Horizontal">
+                        <!--Stemming-->
+                        <RadioButton  GroupName="RadStemmerLemmatizer" Name="RadStemmer" Margin="5,0,5,0" IsChecked="{Binding ApplyStemmer}" Click="RadioButtonStemmer_Click" Checked="RadioButtonStemmer_Checked">Stemmer</RadioButton>
+                        <!--Lemmatizer-->
+                        <RadioButton  GroupName="RadStemmerLemmatizer" Name="RadLemmatizer" Margin="5,0,0,0" IsChecked="{Binding ApplyLemmatizer}" Click="RadioButtonLemmatizer_Click" Checked="RadioButtonLemmatizer_Checked">Lemmatizer</RadioButton>
+                    </StackPanel>
+
+                    <StackPanel Grid.Row="1" Grid.Column="2" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Orientation="Vertical" Margin="5,0,0,0">
+                        <Button Name="BtnStartIndexing" IsEnabled="{Binding CanStartIndexing}" Content="Start _Indexing" Click="BtnStartIndexing_OnClick" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="5,2" Height="23" />
+                    </StackPanel>
+                </Grid>
+            </GroupBox>
+
+            <Grid Grid.Row="3" Margin="5,5,5,0">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
 
-                <!--Load Project-->
-                <Grid Grid.Row="0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"></ColumnDefinition>
-                        <ColumnDefinition Width="95" />
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-                    <Label Grid.Row="0" Grid.ColumnSpan="2" Padding="0" Grid.Column="0" x:Name="LblProject" Content="Select a project to index (Java, C#, C++): " HorizontalAlignment="Left" VerticalAlignment="Top" VerticalContentAlignment="Center" Height="23"/>
-                    <TextBox Grid.Row="1" Grid.Column="0" x:Name="TxtProjectPath" HorizontalAlignment="Stretch" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" MouseDoubleClick="TxtProjectPath_MouseDoubleClick" KeyDown="TxtProjectPath_KeyDown" />
-                    <Button Grid.Row="1" Grid.Column="1" x:Name="BtnOpenProject" Content="_Open Project" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Top" Margin="5,0,0,0" Click="BtnOpenProject_Click" IsEnabled="True" Padding="5,2" Height="23" />
-                </Grid>
-
-                <!--File Display-->
-                <Grid Grid.Row="1">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="60" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="30" />
-                        <RowDefinition Height="*" MinHeight="120" />
-                    </Grid.RowDefinitions>
-
-                    <!--Available Files-->
-                    <Label Padding="0" Grid.Column="0" Grid.Row="0" Content="Available Files" VerticalAlignment="Center" HorizontalAlignment="Center" />
-                    <ListBox Grid.Column="0" Grid.Row="1" x:Name="LstBoxAvailableFiles" ItemsSource="{Binding Path=AvailableFiles}" SelectionMode="Multiple" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Padding="0" Margin="0,0,0,5">
-                        <ListBox.ItemTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding Path=Name}"/>
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
-                    </ListBox>
-
-                    <!--Move File Buttons-->
-                    <StackPanel Grid.Column="1" Grid.Row="1" Orientation="Vertical" VerticalAlignment="Center">
-                        <Button x:Name="BtnMoveSelectedAvailableToSelected" Content="&gt;" Margin="0,5" Width="30" Click="BtnMoveSelectedAvailableToSelected_Click"/>
-                        <Button x:Name="BtnMoveAllAvailableToSelected" Content="&gt;&gt;" Margin="0,5" Width="30" Click="BtnMoveAllAvailableToSelected_Click"/>
-                        <Button x:Name="BtnMoveSelectedSelectedToAvailable" Content="&lt;" Margin="0,5" Width="30" Click="BtnMoveSelectedSelectedToAvailable_Click"/>
-                        <Button x:Name="BtnMoveAllSelectedToAvailable" Content="&lt;&lt;" Margin="0,5" Width="30" Click="BtnMoveAllSelectedToAvailable_Click"/>
-                    </StackPanel>
-
-                    <!--Selected Files-->
-                    <Label Padding="0" Grid.Column="2" Grid.Row="0" Content="Selected Files" VerticalAlignment="Center" HorizontalAlignment="Center" />
-                    <ListBox Grid.Column="2" Grid.Row="1" Margin="0,0,0,5" x:Name="LstBoxSelectedFiles" ItemsSource="{Binding Path=SelectedFiles}" SelectionMode="Multiple" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Padding="0">
-                        <ListBox.ItemTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding Path=Name}"/>
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
-                    </ListBox>
-
-                </Grid>
-                <!--Close File Display Grid-->
+                <!--Tab Control-->
+                <TabControl Grid.Row="0" x:Name="TabCtr" HorizontalAlignment="Stretch" Visibility="{Binding HasIndexingResult, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    <TabItem Header="Natural Words">
+                        <TextBox Name="TxtIdentified" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Text="{Binding DictionaryWords}" VerticalScrollBarVisibility="Auto" />
+                    </TabItem>
+                    <TabItem Header="Abbreviations">
+                        <TextBox Name="TxtTokens" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Text="{Binding Tokens}" VerticalScrollBarVisibility="Auto" />
+                    </TabItem>
+                    <TabItem Header="Unidentified Words">
+                        <TextBox Name="TxtUnIdentified" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Text="{Binding UnidentifiedWords}" VerticalScrollBarVisibility="Auto" />
+                    </TabItem>
+                    <TabItem Header="Stemming">
+                        <TextBox Name="TxtStemmed" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Text="{Binding StemmedWords}" VerticalScrollBarVisibility="Auto" />
+                    </TabItem>
+                    <TabItem Header="Spell Checking">
+                        <TextBox Name="TxtCorrection" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Text="{Binding CorrectedWords}" VerticalScrollBarVisibility="Auto" />
+                    </TabItem>
+                </TabControl>
             </Grid>
-            <!--Close Project Grid-->
-        </GroupBox>
 
-        <!--Indexer-->
-        <GroupBox Grid.Row="2" x:Name="GrpIndexer" Header="Indexer Settings" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="5,0,5,5" Padding="5">
-            <!--Splitter Setting-->
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-
-                <WrapPanel Margin="0,10,0,0" Grid.Row="0" Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Orientation="Vertical">
-                    <!--Apply Split-->
-                    <CheckBox Name="RadApplyCamelCase" Margin="0,0,0,5" IsChecked="{Binding ApplyCamelCaseSplit}">Camel Case splitting</CheckBox>
-                    <CheckBox Name="RadApplyBestSuffix" Margin="0,0,0,5" IsChecked="{Binding ApplyBestSuffixSplit}">Advance splitting</CheckBox>
+            <!--Numbers-->
+            <WrapPanel Grid.Row="4" Visibility="{Binding DisplayNumberBottom, Converter={StaticResource BooleanToVisibilityConverter}}" Orientation="Horizontal">
+                <WrapPanel Margin="0,0,5,0">
+                    <Label Content="Total: " />
+                    <Label Content="{Binding Path=IdentifierCount}" />
                 </WrapPanel>
-                
-                <!--Split On-->
-                <StackPanel Margin="0,10,0,0" Grid.Row="1" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Left">
-                    <ListView Name="LstViewSplitOn" ItemsSource="{Binding Path=SplitTypes}" BorderThickness="0" Background="#FFF0F0F0">
-                        <ListView.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <WrapPanel Orientation="Horizontal" Background="#FFF0F0F0" />
-                            </ItemsPanelTemplate>
-                        </ListView.ItemsPanel>
-                        <ListBox.ItemContainerStyle>
-                            <Style TargetType="{x:Type ListBoxItem}">
-                                <Setter Property="Template">
-                                    <Setter.Value>
-                                        <ControlTemplate TargetType="{x:Type ListBoxItem}">
-                                            <ContentPresenter/>
-                                        </ControlTemplate>
-                                    </Setter.Value>
-                                </Setter>
-                            </Style>
-                        </ListBox.ItemContainerStyle>
-                        <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <CheckBox IsChecked="{Binding Path=IsSelected}" Click="ChkSplitOn_Click" Margin="0,0,5,0">
-                                    <ContentControl>
-                                        <TextBlock TextWrapping="Wrap">
-                                            <Run Text="{Binding Text}" />
-                                        </TextBlock>
-                                    </ContentControl>
-                                </CheckBox>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
-                </StackPanel>
+                <WrapPanel Margin="0,0,5,0">
+                    <Label Content="Natural Words Count: " />
+                    <Label Content="{Binding Path=DictionaryWordsCount}" />
+                </WrapPanel>
+                <WrapPanel Margin="0,0,5,0">
+                    <Label Content="Abbreviations Count: " />
+                    <Label Content="{Binding Path=TokensCount}" />
+                </WrapPanel>
+                <WrapPanel Margin="0,0,5,0">
+                    <Label Content="Unidentified Words Count: " />
+                    <Label Content="{Binding Path=UnidentifiedWordsCount}" />
+                </WrapPanel>
+            </WrapPanel>
 
-                <StackPanel Margin="0,10,0,0" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Orientation="Vertical">
-                    <!--Spell Checking-->
-                    <CheckBox Name="ChkApplySpellChecking" Margin="5,0,0,5" IsChecked="{Binding ApplySpellCheck}">Spell check</CheckBox>
-                    <CheckBox Name="ChkRemoveEnglishStopWords" Margin="5,0,0,5" IsChecked="{Binding RemoveEnglishStopWords}">Remove English Stop Words</CheckBox>
-                    <CheckBox Name="ChkRemoveProgrammingStopWords" Margin="5,0,0,5" IsChecked="{Binding RemoveProgrammingStopWords}">Remove Programming Stop Words</CheckBox>
-                </StackPanel>
-
-                <StackPanel Margin="0,10,0,0" Grid.Row="1" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Orientation="Horizontal">
-                    <!--Stemming-->
-                    <RadioButton  GroupName="RadStemmerLemmatizer" Name="RadStemmer" Margin="5,0,5,0" IsChecked="{Binding ApplyStemmer}" Click="RadioButtonStemmer_Click" Checked="RadioButtonStemmer_Checked">Stemmer</RadioButton>
-                    <!--Lemmatizer-->
-                    <RadioButton  GroupName="RadStemmerLemmatizer" Name="RadLemmatizer" Margin="5,0,0,0" IsChecked="{Binding ApplyLemmatizer}" Click="RadioButtonLemmatizer_Click" Checked="RadioButtonLemmatizer_Checked">Lemmatizer</RadioButton>
-                </StackPanel>
-
-                <StackPanel Grid.Row="1" Grid.Column="2" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Orientation="Vertical" Margin="5,0,0,0">
-                    <Button Name="BtnStartIndexing" IsEnabled="{Binding CanStartIndexing}" Content="Start _Indexing" Click="BtnStartIndexing_OnClick" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="5,2" Height="23" />
-                </StackPanel>
+            <!--Status-->
+            <Grid Grid.Row="4" Margin="5,5,5,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="300" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <ProgressBar Height="10" Grid.Column="0" Visibility="{Binding IsIndexingInProgress, Converter={StaticResource BooleanToVisibilityConverter}}" Value="{Binding ProgressValue}" Margin="5" />
+                <Label Grid.Column="1" Content="{Binding Status}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Right" Padding="0" />
             </Grid>
-        </GroupBox>
-
-        <Grid Grid.Row="3" Margin="5,5,5,0">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
-
-            <!--Tab Control-->
-            <TabControl Grid.Row="0" x:Name="TabCtr" HorizontalAlignment="Stretch" Visibility="{Binding HasIndexingResult, Converter={StaticResource BooleanToVisibilityConverter}}">
-                <TabItem Header="Natural Words">
-                    <TextBox Name="TxtIdentified" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Text="{Binding DictionaryWords}" VerticalScrollBarVisibility="Auto" />
-                </TabItem>
-                <TabItem Header="Abbreviations">
-                    <TextBox Name="TxtTokens" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Text="{Binding Tokens}" VerticalScrollBarVisibility="Auto" />
-                </TabItem>
-                <TabItem Header="Unidentified Words">
-                    <TextBox Name="TxtUnIdentified" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Text="{Binding UnidentifiedWords}" VerticalScrollBarVisibility="Auto" />
-                </TabItem>
-                <TabItem Header="Stemming">
-                    <TextBox Name="TxtStemmed" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Text="{Binding StemmedWords}" VerticalScrollBarVisibility="Auto" />
-                </TabItem>
-                <TabItem Header="Spell Checking">
-                    <TextBox Name="TxtCorrection" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Text="{Binding CorrectedWords}" VerticalScrollBarVisibility="Auto" />
-                </TabItem>
-            </TabControl>
         </Grid>
-
-        <!--Numbers-->
-        <WrapPanel Grid.Row="4" Visibility="{Binding DisplayNumberBottom, Converter={StaticResource BooleanToVisibilityConverter}}" Orientation="Horizontal">
-            <WrapPanel Margin="0,0,5,0">
-                <Label Content="Total: " />
-                <Label Content="{Binding Path=IdentifierCount}" />
-            </WrapPanel>
-            <WrapPanel Margin="0,0,5,0">
-                <Label Content="Natural Words Count: " />
-                <Label Content="{Binding Path=DictionaryWordsCount}" />
-            </WrapPanel>
-            <WrapPanel Margin="0,0,5,0">
-                <Label Content="Abbreviations Count: " />
-                <Label Content="{Binding Path=TokensCount}" />
-            </WrapPanel>
-            <WrapPanel Margin="0,0,5,0">
-                <Label Content="Unidentified Words Count: " />
-                <Label Content="{Binding Path=UnidentifiedWordsCount}" />
-            </WrapPanel>
-        </WrapPanel>
-        
-        <!--Status-->
-        <Grid Grid.Row="4" Margin="5,5,5,0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="300" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-            <ProgressBar Height="10" Grid.Column="0" Visibility="{Binding IsIndexingInProgress, Converter={StaticResource BooleanToVisibilityConverter}}" Value="{Binding ProgressValue}" Margin="5" />
-            <Label Grid.Column="1" Content="{Binding Status}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Right" Padding="0" />
-        </Grid>
-    </Grid>
+    </xctk:BusyIndicator>
 </Window>
