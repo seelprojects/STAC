@@ -137,7 +137,6 @@ namespace SourceCodeIndexer.STAC.Models
         internal void RemoveFilterWordAndTokenResult(IDictionary dictionary)
         {
             _dictionaryWordList.Keys.Where(dictionary.IsStopWord).ToList().ForEach(key => _dictionaryWordList.Remove(key));
-            _tokenList.Keys.Where(key => key.Length <= 2).ToList().ForEach(key => _tokenList.Remove(key));
         }
 
         /// <summary>
