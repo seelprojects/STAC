@@ -15,7 +15,7 @@
                 <Run>A tool for Textual Analysis of Code</Run>
                 <LineBreak />
                 <LineBreak />
-                Github: <Hyperlink RequestNavigate="Hyperlink_OnRequestNavigate" NavigateUri="https://github.com/stactool/STAC">https://github.com/stactool/STAC</Hyperlink>
+                Github: <Hyperlink RequestNavigate="Hyperlink_OnRequestNavigate" NavigateUri="https://github.com/seelprojects/STAC">https://github.com/seelprojects/STAC</Hyperlink>
                 <LineBreak />
                 <TextBox Background="Transparent" VerticalAlignment="Center" Margin="0,0,0,0" BorderBrush="Transparent">Contact: mahmoud@csc.lsu.edu</TextBox>
                 <LineBreak />
