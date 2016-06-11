@@ -18,7 +18,6 @@ namespace SourceCodeIndexer.STAC.FileStats
         {
             _projectPath = projectPath;
             _fileExtensionsToSearch = fileExtensionsToSearch;
-            //_fileExtensionsToSearch.Add(".txt");
             _notificationHandler = notificationHandler;
         }
 
@@ -53,11 +52,10 @@ namespace SourceCodeIndexer.STAC.FileStats
             // load files in this dir
             var currentFiles = directoryInfo.EnumerateFiles()
                 .Where(file => _fileExtensionsToSearch.Contains(file.Extension.ToLowerInvariant()))
-                .Select(file => new FileStat() { IndexerFile = new IndexerFile(file.FullName, file.Name, file.Extension) });
+                .Select(file => new FileStat() { IndexerFile = new IndexerFile(file.FullName, file.Name, file.Extension) }).ToList();
 
-            _fileCount += currentFiles.Count();
-            if (_notificationHandler != null)
-                _notificationHandler.UpdateStatus(_fileCount.ToString());
+            _fileCount += currentFiles.Count;
+            _notificationHandler?.UpdateStatus(_fileCount.ToString());
             returnFileStats.AddRange(currentFiles);
 
             // recursively load file in sub dirs

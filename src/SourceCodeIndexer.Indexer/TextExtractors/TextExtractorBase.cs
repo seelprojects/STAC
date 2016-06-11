@@ -115,7 +115,7 @@ namespace SourceCodeIndexer.STAC.TextExtractors
         /// </summary>
         /// <param name="text">Text to perform extract on</param>
         /// <returns>List of comments</returns>
-        public IEnumerable<string> ExtractComments(string text)
+        public virtual IEnumerable<string> ExtractComments(string text)
         {
             MatchCollection matches = CommentsAndStringLiteralsRegexStringRegex.Matches(text);
             foreach (Match match in matches)
@@ -145,7 +145,7 @@ namespace SourceCodeIndexer.STAC.TextExtractors
         /// </summary>
         /// <param name="text">Text to perform extract on</param>
         /// <returns>List of string literals</returns>
-        public IEnumerable<string> ExtractStringLiterals(string text)
+        public virtual IEnumerable<string> ExtractStringLiterals(string text)
         {
             MatchCollection matches = CommentsAndStringLiteralsRegexStringRegex.Matches(text);
             foreach (string stringLiterals in (from Match match in matches
@@ -178,7 +178,7 @@ namespace SourceCodeIndexer.STAC.TextExtractors
         /// </summary>
         /// <param name="text">Text to extract from</param>
         /// <returns>List of identifiers</returns>
-        public IEnumerable<string> ExtractIdentifiersAndStringLiterals(string text)
+        public virtual IEnumerable<string> ExtractIdentifiersAndStringLiterals(string text)
         {
             // Step 1 : Remove package declaration
             text = RemovePackageDeclarationAndImports(text);

@@ -1,5 +1,4 @@
-﻿using Xceed.Wpf.Toolkit;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Input;
 using SourceCodeIndexer.UI.ViewModels;
@@ -180,11 +179,6 @@ namespace SourceCodeIndexer.UI
             {
                 System.Windows.MessageBox.Show("Select a project to index and click Start Indexing before saving a result.", "Result not found", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-        }
-
-        private void ExitMenuItem_Click(object sender, RoutedEventArgs e)
-        {
-            Close();
         }
 
         private void AboutMenuItem_Click(object sender, RoutedEventArgs e)

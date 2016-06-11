@@ -108,7 +108,8 @@ namespace SourceCodeIndexer.STAC.Models
             {
                 new JavaTextExtractor(),
                 new CPlusPlusTextExtractor(),
-                new CSharpTextExtractor()
+                new CSharpTextExtractor(),
+                new SmallTalkTextExtractor()
             };
         }
 

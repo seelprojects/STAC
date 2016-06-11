@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "STAC", "SourceCodeIndexer.I
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "STAC.UI", "SourceCodeIndexer.UI\STAC.UI.csproj", "{C522BF36-7223-47A0-850E-9DFD9C099A6C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tester", "Tester\Tester.csproj", "{22DF0754-F488-415B-98A1-638A686C5D1C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,20 +23,27 @@ Global
 		{C522BF36-7223-47A0-850E-9DFD9C099A6C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C522BF36-7223-47A0-850E-9DFD9C099A6C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C522BF36-7223-47A0-850E-9DFD9C099A6C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{22DF0754-F488-415B-98A1-638A686C5D1C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{22DF0754-F488-415B-98A1-638A686C5D1C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{22DF0754-F488-415B-98A1-638A686C5D1C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{22DF0754-F488-415B-98A1-638A686C5D1C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 3
+		SccNumberOfProjects = 4
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://csc2015sk.visualstudio.com/defaultcollection
-		SccProjectUniqueName0 = SourceCodeIndexer.UI\\STAC.UI.csproj
-		SccProjectName0 = SourceCodeIndexer.UI
-		SccLocalPath0 = SourceCodeIndexer.UI
-		SccProjectUniqueName1 = SourceCodeIndexer.Indexer\\STAC.csproj
-		SccProjectName1 = SourceCodeIndexer.Indexer
-		SccLocalPath1 = SourceCodeIndexer.Indexer
-		SccLocalPath2 = .
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = SourceCodeIndexer.UI\\STAC.UI.csproj
+		SccProjectName1 = SourceCodeIndexer.UI
+		SccLocalPath1 = SourceCodeIndexer.UI
+		SccProjectUniqueName2 = SourceCodeIndexer.Indexer\\STAC.csproj
+		SccProjectName2 = SourceCodeIndexer.Indexer
+		SccLocalPath2 = SourceCodeIndexer.Indexer
+		SccProjectUniqueName3 = Tester\\Tester.csproj
+		SccProjectName3 = Tester
+		SccLocalPath3 = Tester
 	EndGlobalSection
 EndGlobal

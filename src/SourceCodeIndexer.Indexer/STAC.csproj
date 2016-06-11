@@ -45,6 +45,7 @@
     <Compile Include="Enum\Enum.cs" />
     <Compile Include="Enum\EnumUtilities.cs" />
     <Compile Include="FileStats\CPlusPlusFileStatReader.cs" />
+    <Compile Include="FileStats\SmallTalkFileStatReader.cs" />
     <Compile Include="FileStats\CSharpFileStatReader.cs" />
     <Compile Include="FileStats\FileStat.cs" />
     <Compile Include="FileStats\FileStatReaderBase.cs" />
@@ -85,6 +86,7 @@
     <Compile Include="TextExtractors\CSharpTextExtractor.cs" />
     <Compile Include="TextExtractors\ITextExtractor.cs" />
     <Compile Include="TextExtractors\JavaTextExtractor.cs" />
+    <Compile Include="TextExtractors\SmallTalkTextExtractor.cs" />
     <Compile Include="TextExtractors\RegularExpressions.cs" />
     <Compile Include="TextExtractors\TextExtractorBase.cs" />
   </ItemGroup>

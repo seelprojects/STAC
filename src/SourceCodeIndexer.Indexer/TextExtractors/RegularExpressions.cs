@@ -10,7 +10,7 @@
 
         // for string literals we wont match quotation mark so that the quotation mark remains in the source code to identify variables
         // for comments we match \\ or \* *\ so that they are removed from source code
-        public const string JavaRegexCommentAndStringLiteral = "(?:(?<!['\\\\])(?:\")(?<" + GroupStringLiteralsName + ">.*?)(?!\\\\)(?:\"))|(?<" + GroupInlineCommentName + ">//.*)|(?<" + GroupMultilineCommentName + ">(?s)/\\*.*?\\*/)";
+        public const string JavaRegexCommentAndStringLiteral = "(?:(?<!['\\\\])(?:\")(?<" + GroupStringLiteralsName + ">.*?)(?:(?<!\\\\)|(?<=\\\\\\\\))\")|(?<" + GroupInlineCommentName + ">//.*)|(?<" + GroupMultilineCommentName + ">(?s)/\\*.*?\\*/)";
         public const string JavaRegexAnnotations = @"@[\w]+(?:\s*\([^\)]*\))?";
         public const string JavaRegexGenericType = @"<[^;\{\}<>]*>";
         public const string JavaRegexVariableDeclaration = @"[\w\$\[\]\.]+\s+([\w\$]+)\s*(?:(?:=\s*[^;,\}\)]+\s*)?(?:,\s*(?:[\w\$\[\]\.]+\s+)?\s*([\w\$]+)\s*(?:=\s*[^;,\}\)]+\s*)?)*(?:;|\)\s*\{|\}|\)))";
@@ -28,7 +28,7 @@
 
         #region C#
 
-        public const string CSharpRegexCommentAndStringLiteral = "(?:(?<!['\\\\])(?:@?\")(?<" + GroupStringLiteralsName + ">(?s).*?)(?!\\\\)(?:\"))|(?<" + GroupInlineCommentName + ">//.*)|(?<" + GroupMultilineCommentName + ">(?s)/\\*.*?\\*/)";
+        public const string CSharpRegexCommentAndStringLiteral = "(?:(?<!['\\\\])(?:@?\")(?<" + GroupStringLiteralsName + ">(?s).*?)(?:(?<!\\\\)|(?<=\\\\\\\\))\")|(?<" + GroupInlineCommentName + ">//.*)|(?<" + GroupMultilineCommentName + ">(?s)/\\*.*?\\*/)";
         public const string CSharpRegexGenericType = @"<[^;\{\}<>]*>";
         public const string CSharpRegexAnnotations = @"[ \t]*#\w+.*";
         public const string CSharpRegexVariableDeclaration = @"[\w\$\[\]\.]+\s+([\w\$]+)\s*(?:(?:=\s*[^;,\}\)]+\s*)?(?:,\s*(?:[\w\$\[\]\.]+\s+)?\s*([\w\$]+)\s*(?:=\s*[^;,\}\)]+\s*)?)*(?:;|\{|\)\s*\{|\}|\)))";
@@ -46,7 +46,7 @@
 
         #region C++
 
-        public const string CPlusPlusRegexCommentAndStringLiteral = "(?:(?<!['\\\\])(?:\")(?<" + GroupStringLiteralsName + ">.*?)(?!\\\\)(?:\"))|(?<" + GroupInlineCommentName + ">//.*)|(?<" + GroupMultilineCommentName + ">(?s)/\\*.*?\\*/)";
+        public const string CPlusPlusRegexCommentAndStringLiteral = "(?:(?<!['\\\\])(?:\")(?<" + GroupStringLiteralsName + ">.*?)(?:(?<!\\\\)|(?<=\\\\\\\\))\")|(?<" + GroupInlineCommentName + ">//.*)|(?<" + GroupMultilineCommentName + ">(?s)/\\*.*?\\*/)";
         public const string CPlusPlusRegexGenericType = @"(<[^;\{\}<>]*>)|(\w+::)";
         public const string CPlusPlusRegexAnnotations = "@";
         //public const string CPlusPlusRegexVariableDeclaration = @"[\w\$\[\]\.]+(?:\s*(?:\**|&*)\s*)\s+([\w\$]+)\s*(?:=\s*[^;,\}\)]+\s*)?(?:,\s*(?:[\w\$\[\]\.]+)?(?:\**\s+|\s+\**|\s+\**\s+|\s+&?)([\w\$]+)\s*(?:=\s*[^;\s]+\s*)?)*(?:;|:|\)\s*(?:\{|:))";
@@ -61,6 +61,23 @@
             "protected|public|register|reinterpret_cast|requires|return|signed|sizeof|static|static_assert|static_cast|struct|switch|template|this|thread_local|throw|try|typedef|typeid|" + 
             @"typename|union|unsigned|using|virtual|voi|volatile|while|xor|xor_eq)(?!\w)";
         public const string CPlusPlusRegexReturnKeyword = "return ";
+
+        #endregion
+
+        #region SmallTalk
+
+        public const string SmallTalkRegexCommentAndStringLiteral = "(?:'')|(?:'(?<" + GroupStringLiteralsName + ">.*?)(?:(?<!')|(?<=''))'(?!'))|(?<" + GroupInlineCommentName + ">\".*?\")|(?<" + GroupMultilineCommentName + ">(?s)\".*?\")";
+        public const string SmallTalkRegexGenericType = @"\b\B"; //not to match anything
+        public const string SmallTalkRegexAnnotations = @"\b\B";
+        public const string SmallTalkRegexVariableDeclaration = "(?i)(?:(?:instanceVariableNames|classVariableNames): '([^\\s']+)(?:\\s+([^\\s']+))*')|(?:\\|([^\\s']+)(?:\\s+([^\\s']+))*\\|)";
+        // ! id ["class"] methodsFor: string ! method ! method ! !
+        public const string SmallTalkRegexMethodDeclaration = @"(?:!\s*[\w]+(?:\s+class)?\s+methodsFor\s*:[^!]+!)(?:\s*(\w+)[^!]+!)?\s*!";
+        public const string SmallTalkRegexPackageDeclarationAndImport = @"(?i)SystemOrganization\s+addCategory:\s*[^!]*!";
+        /// <summary>
+        /// do not remove 'throws' used by method declarations, data type including void for variable/method delcaration identification, null are value so don't remove them too
+        /// </summary>
+        public const string SmallTalkRegexKeywords = @"(?i)(?<!\w)(true|false|nil|self|super|thisContext)(?!\w)";
+        public const string SmallTalkRegexReturnKeyword = "^ ";
 
         #endregion
 

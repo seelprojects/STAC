@@ -386,7 +386,8 @@ namespace SourceCodeIndexer.UI.ViewModels
         {
             new Tuple<ITextExtractor, FileStatReaderBase>(new JavaTextExtractor(), new JavaFileStatReader()),
             new Tuple<ITextExtractor, FileStatReaderBase>(new CPlusPlusTextExtractor(), new CPlusPlusFileStatReader()),
-            new Tuple<ITextExtractor, FileStatReaderBase>(new CSharpTextExtractor(), new CSharpFileStatReader())
+            new Tuple<ITextExtractor, FileStatReaderBase>(new CSharpTextExtractor(), new CSharpFileStatReader()),
+            new Tuple<ITextExtractor, FileStatReaderBase>(new SmallTalkTextExtractor(), new CSharpFileStatReader())
         };
 
         #endregion
